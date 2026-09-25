@@ -10,8 +10,9 @@ CampusTodo 是一个控制台版校园任务管理器，用于软件工程综合
 
 ## 功能
 
-- `TaskService#addTask(String title)`：新增任务，自动分配递增编号；标题为空时拒绝。
+- `TaskService#addTask(String title)`：新增任务，自动分配递增编号，默认优先级为 MEDIUM；标题为空时拒绝。
 - `TaskService#listAll()`：列出全部任务。
+- `TaskService#filterByPriority(Priority priority)`：按优先级筛选任务；没有命中时返回空列表，筛选条件为 null 时明确拒绝。
 
 ## 构建与测试
 
@@ -29,6 +30,7 @@ campus-todo/
 └─ src/
    ├─ main/java/edu/hbuas/campustodo/
    │  ├─ model/Task.java
+   │  ├─ model/Priority.java
    │  └─ service/TaskService.java
    └─ test/java/edu/hbuas/campustodo/service/
       └─ TaskServiceTest.java
