@@ -58,4 +58,17 @@ public class TaskService {
         }
         return result;
     }
+
+public void completeTask(long taskId) {
+    Task task = listAll().stream()
+            .filter(t -> t.getId() == taskId)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("任务不存在"));
+
+    if (task.isCompleted()) {
+        throw new IllegalArgumentException("任务已经完成，不能重复完成");
+    }
+
+    task.setCompleted(true);
+  }
 }
