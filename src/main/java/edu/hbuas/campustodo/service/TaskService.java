@@ -1,5 +1,6 @@
 package edu.hbuas.campustodo.service;
 
+import edu.hbuas.campustodo.model.Priority;
 import edu.hbuas.campustodo.model.Task;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class TaskService {
     private long nextId = 1;
 
     /**
-     * 新增一条任务。
+     * 新增一条任务，默认优先级为 {@link Priority#MEDIUM}。
      *
      * @param title 任务标题，不能为 null 或空白
      * @return 新创建的任务
@@ -36,5 +37,25 @@ public class TaskService {
      */
     public List<Task> listAll() {
         return new ArrayList<>(tasks);
+    }
+
+    /**
+     * 按优先级筛选任务。
+     *
+     * @param priority 目标优先级，不能为 null
+     * @return 命中该优先级的任务列表；没有命中任务时返回空列表，不会返回 null
+     * @throws IllegalArgumentException 当 priority 为 null 时
+     */
+    public List<Task> filterByPriority(Priority priority) {
+        if (priority == null) {
+            throw new IllegalArgumentException("筛选优先级不能为空");
+        }
+        List<Task> result = new ArrayList<>();
+        for (Task task : tasks) {
+            if (priority == task.getPriority()) {
+                result.add(task);
+            }
+        }
+        return result;
     }
 }
