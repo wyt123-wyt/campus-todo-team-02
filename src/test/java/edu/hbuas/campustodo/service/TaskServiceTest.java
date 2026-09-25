@@ -48,32 +48,29 @@ class TaskServiceTest {
     void listAll_shouldBeEmptyInitially() {
         assertTrue(service.listAll().isEmpty());
     }
+    @Test
+    void completeTask_success_normalTask(){
+        long tid = service.addTask("软件工程作业").getId();
+        service.completeTask(tid);
+        var t = service.listAll().stream().filter(x->x.getId()==tid).findFirst().get();
+        assertTrue(t.isCompleted());
+    }
 
-}
-@Test
-void completeTask_success_normalTask(){
-    long tid = taskService.addTask("软件工程作业");
-    taskService.completeTask(tid);
-    var t = taskService.listAll().stream().filter(x->x.getId()==tid).findFirst().get();
-    assertTrue(t.isCompleted());
-}
+    @Test
+    void completeTask_throwWhenIdNotExist(){
+        assertThrows(IllegalArgumentException.class, ()->{
+            service.completeTask(9999L);
+        });
+    }
 
-@Test
-void completeTask_throwWhenIdNotExist(){
-    assertThrows(IllegalArgumentException.class, ()->{
-        taskService.completeTask(9999L);
-    });
-}
-
-@Test
-void completeTask_throwWhenAlreadyCompleted(){
-    long tid = taskService.addTask("报告");
-    taskService.completeTask(tid);
-    assertThrows(IllegalArgumentException.class, ()->{
-        taskService.completeTask(tid);
-    });
-}
-
+    @Test
+    void completeTask_throwWhenAlreadyCompleted(){
+        long tid = service.addTask("报告").getId();
+        service.completeTask(tid);
+        assertThrows(IllegalArgumentException.class, ()->{
+            service.completeTask(tid);
+        });
+    }
 
     @Test
     @DisplayName("新增任务默认优先级为 MEDIUM")
@@ -124,7 +121,6 @@ void completeTask_throwWhenAlreadyCompleted(){
         assertEquals(List.of(task), service.filterByPriority(Priority.LOW));
 
         task.setPriority(Priority.HIGH);
-
         assertEquals(List.of(task), service.filterByPriority(Priority.HIGH));
     }
 
@@ -136,5 +132,5 @@ void completeTask_throwWhenAlreadyCompleted(){
         assertThrows(IllegalArgumentException.class, () -> task.setPriority(null));
         assertEquals(Priority.MEDIUM, task.getPriority());
     }
-}
 
+}
