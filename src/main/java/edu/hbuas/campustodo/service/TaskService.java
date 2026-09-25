@@ -58,7 +58,7 @@ public class TaskService {
         }
         return result;
     }
-}
+
 public void completeTask(long taskId) {
     Task task = listAll().stream()
             .filter(t -> t.getId() == taskId)
