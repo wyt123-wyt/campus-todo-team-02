@@ -48,3 +48,26 @@ class TaskServiceTest {
         assertTrue(service.listAll().isEmpty());
     }
 }
+@Test
+void completeTask_success_normalTask(){
+    long tid = taskService.addTask("软件工程作业");
+    taskService.completeTask(tid);
+    var t = taskService.listAll().stream().filter(x->x.getId()==tid).findFirst().get();
+    assertTrue(t.isCompleted());
+}
+
+@Test
+void completeTask_throwWhenIdNotExist(){
+    assertThrows(IllegalArgumentException.class, ()->{
+        taskService.completeTask(9999L);
+    });
+}
+
+@Test
+void completeTask_throwWhenAlreadyCompleted(){
+    long tid = taskService.addTask("报告");
+    taskService.completeTask(tid);
+    assertThrows(IllegalArgumentException.class, ()->{
+        taskService.completeTask(tid);
+    });
+}
