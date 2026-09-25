@@ -35,3 +35,11 @@ campus-todo/
    └─ test/java/edu/hbuas/campustodo/service/
       └─ TaskServiceTest.java
 ```
+
+## 协作流程
+
+1. 所有开发必须从最新的 `main` 分支切出功能分支，例如 `feature/1-priority-filter`。
+2. 每次修改只解决一个 Issue，提交信息使用 `<type>: <description>` 格式。
+3. 开发完成后，推送分支并创建 Pull Request，关联对应的 Issue（例如 `Closes #1`）。
+4. PR 必须通过 CI 自动测试，且至少获得一人 Approve 后方可合并。
+5. 禁止直接向 `main` 分支提交代码，禁止使用 `git push --force`。
