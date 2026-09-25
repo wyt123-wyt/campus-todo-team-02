@@ -1,5 +1,5 @@
 ## 关联 Issue
-Closes #3
+Resolves part of #3 
 
 ## 修改说明
 （简述本次修改了什么内容，例如：新增 PR 模板，规范团队评审流程）
