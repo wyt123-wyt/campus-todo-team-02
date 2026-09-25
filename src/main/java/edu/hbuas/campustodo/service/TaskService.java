@@ -70,4 +70,5 @@ public void completeTask(long taskId) {
     }
 
     task.setCompleted(true);
+  }
 }
